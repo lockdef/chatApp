@@ -17,9 +17,6 @@ export const mutation: Mutation = {
   ADD(state: State, chat: Chat) {
     state.chat.push(chat)
   },
-  GET(state: State) {
-    return state.chat
-  },
   CLEAR(state: State) {
     state.chat = []
   },
@@ -31,4 +28,8 @@ export const commit = <T extends keyof typeof MutationName>(
   payload: MutationPayload[T]
 ) => {
   state.commit(MutationPath[module], payload)
+}
+
+export const getState = (state: Store<any>) => {
+  return state.state.chat
 }
