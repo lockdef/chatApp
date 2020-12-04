@@ -17,6 +17,9 @@ export const mutation: Mutation = {
   ADD(state: State, chat: Chat) {
     state.chat.push(chat)
   },
+  SET_UNSUBSCRIBE(state: State, unsubscribe: () => void) {
+    state.unsubscribe = unsubscribe
+  },
   CLEAR(state: State) {
     state.chat = []
   },
@@ -30,6 +33,6 @@ export const commit = <T extends keyof typeof MutationName>(
   state.commit(MutationPath[module], payload)
 }
 
-export const getState = (state: Store<any>) => {
-  return state.state.chat
+export const getState = <T extends keyof State>(state: Store<any>, name: T) => {
+  return state.state.chat[name] as State[T]
 }
