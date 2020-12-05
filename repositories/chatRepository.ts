@@ -10,7 +10,7 @@ export default class ChatRepository {
    * チャットをStoreから取得する
    * @param store
    */
-  get(store: Store<any>) {
+  get(store: Store<any>): Chat[] {
     return getState(store, 'chat')
   }
 
@@ -18,8 +18,8 @@ export default class ChatRepository {
    * チャットを作成する
    * @param chat
    */
-  create(chat: Chat) {
-    firestore.collection(chatCollection).add(chat)
+  async create(chat: Chat): Promise<void> {
+    await firestore.collection(chatCollection).add(chat)
   }
 
   /**
