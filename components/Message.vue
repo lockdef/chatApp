@@ -1,10 +1,17 @@
 <template>
-  <div>
+  <div :class="{ 'justify-end': isMyself }" class="flex">
     <div
-      :class="isMyself ? 'bg-green-main' : 'bg-white-bg'"
-      class="p-6 inline-block my-8 mx-"
+      :class="
+        isMyself
+          ? 'bg-green-main rounded-br-none'
+          : 'bg-white-bg rounded-bl-none'
+      "
+      class="px-6 py-4 my-3 mx-6 rounded-full"
     >
-      <p class="text-black-text" v-text="message" />
+      <p
+        :class="isMyself ? 'text-white-bg' : 'text-black-text'"
+        v-text="message"
+      />
     </div>
   </div>
 </template>
