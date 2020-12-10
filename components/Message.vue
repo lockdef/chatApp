@@ -6,7 +6,7 @@
           ? 'bg-green-main rounded-br-none'
           : 'bg-white-bg rounded-bl-none'
       "
-      class="px-6 py-4 my-3 mx-6 rounded-full"
+      class="px-6 py-4 my-3 mx-4 rounded-full"
     >
       <p
         :class="isMyself ? 'text-white-bg' : 'text-black-text'"
