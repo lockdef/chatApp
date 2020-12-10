@@ -1,5 +1,7 @@
 <template>
-  <div class="bg-white-bg flex justify-between items-center flex-d">
+  <div
+    class="absolute top-0 w-screen bg-white-bg flex justify-between items-center flex-d h-20"
+  >
     <h1 class="text-green-text px-4 m-3 text-3xl font-bold">ChatApp</h1>
     <a
       href="https://github.com/Lockdef/chatApp/issues"
