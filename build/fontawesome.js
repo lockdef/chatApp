@@ -1,3 +1,3 @@
-const regular = ['freeFarPaperPlane']
+const regular = ['faPaperPlane']
 
 export { regular }
