@@ -18,6 +18,7 @@ module.exports = {
           bg: '#3EFDDB',
           main: '#5EC3B1',
           text: '#609E93',
+          hover: '#D6F9F3',
         },
         purple: {
           bg: '#D660FF',
