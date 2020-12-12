@@ -11,3 +11,11 @@ export interface Chat {
   /** 内容 */
   sentence: string
 }
+
+export interface CreateChatDto {
+  /** ユーザーID */
+  userId: string
+
+  /** 内容 */
+  sentence: string
+}

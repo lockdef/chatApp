@@ -1,5 +1,6 @@
 import { Store } from 'vuex'
 import ChatRepository from '@/repositories/chatRepository'
+import { Chat } from '@/entities/chat'
 
 export default class GetChatUsecase {
   chatRepository: ChatRepository
@@ -12,7 +13,7 @@ export default class GetChatUsecase {
    * チャットを取得する
    * @param store
    */
-  excute(store: Store<any>) {
-    this.chatRepository.get(store)
+  excute(store: Store<any>): Chat[] {
+    return this.chatRepository.get(store)
   }
 }

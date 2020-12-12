@@ -1,5 +1,5 @@
 import ChatRepository from '@/repositories/chatRepository'
-import { Chat } from '~/entities/chat'
+import { CreateChatDto } from '@/entities/chat'
 
 export default class CreateChatUsecase {
   chatRepository: ChatRepository
@@ -12,7 +12,7 @@ export default class CreateChatUsecase {
    * チャットを作成する
    * @param store
    */
-  async excute(chat: Chat): Promise<void> {
+  async excute(chat: CreateChatDto): Promise<void> {
     await this.chatRepository.create(chat)
   }
 }
