@@ -1,7 +1,8 @@
 import { Store } from 'vuex'
 import { firestore } from '@/infrastructure/firebase'
-import { Chat } from '@/entities/chat'
+import { Chat, CreateChatDto } from '@/entities/chat'
 import { getState, commit } from '@/store/chat'
+import { serverTimestamp } from '@/utils/time'
 
 const chatCollection = 'chat'
 
@@ -18,8 +19,10 @@ export default class ChatRepository {
    * チャットを作成する
    * @param chat
    */
-  async create(chat: Chat): Promise<void> {
-    await firestore.collection(chatCollection).add(chat)
+  async create(chat: CreateChatDto): Promise<void> {
+    await firestore
+      .collection(chatCollection)
+      .add({ ...chat, createdAt: serverTimestamp })
   }
 
   /**
@@ -43,6 +46,7 @@ export default class ChatRepository {
               commit(store, 'ADD', chat)
               break
           }
+          console.log(chat)
         })
       })
     commit(store, 'SET_UNSUBSCRIBE', unsubscribe)
@@ -53,6 +57,6 @@ export default class ChatRepository {
    * @param store
    */
   unsubscribe(store: Store<any>) {
-    getState(store, 'unsubscribe')()
+    getState(store, 'unsubscribe')
   }
 }
