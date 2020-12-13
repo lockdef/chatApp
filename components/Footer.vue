@@ -11,6 +11,7 @@
     <button
       :class="{ 'opacity-60 cursor-default': message.length === 0 }"
       class="text-green-text text-right rounded-full focus:outline-none my-4 mr-4 ml-3 lg:mr-12"
+      @click="createChat"
     >
       <font-awesome-icon
         :icon="['far', 'paper-plane']"
@@ -22,7 +23,7 @@
 </template>
 <script lang="ts">
 import Vue from 'vue'
-import { Chat } from '@/entities/chat'
+import { CreateChatDto } from '@/entities/chat'
 import CreateChatUseCase from '@/usecase/chat/createChatUseCase'
 
 const createChatUseCase = new CreateChatUseCase()
@@ -37,12 +38,21 @@ export default Vue.extend({
       message: '',
     }
   },
-  methods() {
-    createChat() {
-      const dto: Chat = {
-
+  methods: {
+    async createChat() {
+      if (this.message.length === 0) {
+        return
       }
-    }
-  }
+      const dto: CreateChatDto = {
+        userId: '',
+        sentence: this.message,
+      }
+      this.message = ''
+      await createChatUseCase.execute(dto)
+      const element = document.getElementById('messageBox')
+      if (!element) return
+      element.scrollTop = element.scrollHeight
+    },
+  },
 })
 </script>
