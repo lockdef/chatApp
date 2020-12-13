@@ -13,7 +13,7 @@ export default class GetChatUsecase {
    * チャットを取得する
    * @param store
    */
-  excute(store: Store<any>): Chat[] {
+  execute(store: Store<any>): Chat[] {
     return this.chatRepository.get(store)
   }
 }

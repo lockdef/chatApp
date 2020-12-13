@@ -12,7 +12,7 @@ export default class CreateChatUsecase {
    * チャットを作成する
    * @param store
    */
-  async excute(chat: CreateChatDto): Promise<void> {
+  async execute(chat: CreateChatDto): Promise<void> {
     await this.chatRepository.create(chat)
   }
 }
