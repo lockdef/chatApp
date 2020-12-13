@@ -46,10 +46,30 @@ export default class ChatRepository {
               commit(store, 'ADD', chat)
               break
           }
-          console.log(chat)
         })
       })
     commit(store, 'SET_UNSUBSCRIBE', unsubscribe)
+  }
+
+  /**
+   * chatを取得する
+   * @param store
+   */
+  async fetch(store: Store<any>): Promise<void> {
+    await firestore
+      .collection(chatCollection)
+      .orderBy('createdAt', 'desc')
+      .limit(10)
+      .get()
+      .then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          const chat = {
+            chatId: doc.id,
+            ...doc.data(),
+          } as Chat
+          commit(store, 'SET', chat)
+        })
+      })
   }
 
   /**
