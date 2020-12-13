@@ -46,12 +46,17 @@ export default Vue.extend({
     },
   },
   mounted() {
-    const element = document.getElementById('messageBox')
-    if (!element) return
-    element.scrollTop = element.scrollHeight
+    this.scroolToBottom()
   },
   destroyed() {
     subscribeChatUseCase.clear(this.$store)
+  },
+  methods: {
+    scroolToBottom() {
+      const element = document.getElementById('messageBox')
+      if (!element) return
+      element.scrollTop = element.scrollHeight
+    },
   },
 })
 </script>
