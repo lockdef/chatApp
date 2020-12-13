@@ -13,9 +13,14 @@ export const state = (): State => ({
   unsubscribe: () => {},
 })
 
-export const mutation: Mutation = {
+export const mutations: Mutation = {
   ADD(state: State, chat: Chat) {
+    if (state.chat.find((c) => c.chatId === chat.chatId)) return
     state.chat.push(chat)
+  },
+  SET(state: State, chat: Chat) {
+    if (state.chat.find((c) => c.chatId === chat.chatId)) return
+    state.chat.unshift(chat)
   },
   SET_UNSUBSCRIBE(state: State, unsubscribe: () => void) {
     state.unsubscribe = unsubscribe
