@@ -1,12 +1,16 @@
 import { Store } from 'vuex'
-import { firestore } from '@/infrastructure/firebase'
+import { firebase, firestore } from '@/infrastructure/firebase'
 import { Chat, CreateChatDto } from '@/entities/chat'
 import { getState, commit } from '@/store/chat'
 import { serverTimestamp } from '@/utils/time'
 
-const chatCollection = 'chat'
-
 export default class ChatRepository {
+  chatRef: firebase.firestore.CollectionReference<firebase.firestore.DocumentData>
+
+  constructor() {
+    this.chatRef = firestore.collection('chat')
+  }
+
   /**
    * チャットをStoreから取得する
    * @param store
@@ -20,9 +24,7 @@ export default class ChatRepository {
    * @param chat
    */
   async create(chat: CreateChatDto): Promise<void> {
-    await firestore
-      .collection(chatCollection)
-      .add({ ...chat, createdAt: serverTimestamp })
+    await this.chatRef.add({ ...chat, createdAt: serverTimestamp })
   }
 
   /**
@@ -30,8 +32,7 @@ export default class ChatRepository {
    * @param store
    */
   subscribe(store: Store<any>) {
-    const unsubscribe = firestore
-      .collection(chatCollection)
+    const unsubscribe = this.chatRef
       .orderBy('createdAt', 'desc')
       .limit(10)
       .onSnapshot((chatSnapshot) => {
@@ -40,7 +41,6 @@ export default class ChatRepository {
             chatId: snapshot.doc.id,
             ...snapshot.doc.data(),
           } as Chat
-
           switch (snapshot.type) {
             case 'added':
               commit(store, 'ADD', chat)
@@ -56,8 +56,7 @@ export default class ChatRepository {
    * @param store
    */
   async fetch(store: Store<any>): Promise<void> {
-    await firestore
-      .collection(chatCollection)
+    await this.chatRef
       .orderBy('createdAt', 'desc')
       .limit(10)
       .get()
