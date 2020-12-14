@@ -16,10 +16,13 @@ export const state = (): State => ({
 export const mutations: Mutation = {
   ADD(state: State, chat: Chat) {
     if (state.chat.find((c) => c.chatId === chat.chatId)) return
+    console.log(`ADD ${chat.sentence}`)
     state.chat.push(chat)
+    console.log(state.chat)
   },
   SET(state: State, chat: Chat) {
     if (state.chat.find((c) => c.chatId === chat.chatId)) return
+    console.log(`SET ${chat.sentence}`)
     state.chat.unshift(chat)
   },
   SET_UNSUBSCRIBE(state: State, unsubscribe: () => void) {
