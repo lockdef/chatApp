@@ -44,4 +44,13 @@ export default class AuthRepository {
   getUser(store: Store<any>): firebase.User | null {
     return getState(store, 'user')
   }
+
+  /**
+   * ユーザー情報の購読を終了する
+   * @param store
+   */
+  unsubscribe(store: Store<any>) {
+    commit(store, 'CLEAR', undefined)
+    getState(store, 'unsubscribe')()
+  }
 }
