@@ -15,6 +15,7 @@
 
 <script lang="ts">
 import Vue from 'vue'
+import { Context } from '@nuxt/types'
 
 import { Chat } from '@/entities/chat'
 
@@ -36,14 +37,16 @@ export default Vue.extend({
     Message,
     Footer,
   },
-  async fetch({ store }) {
+  async fetch({ store }: Context) {
     await fetchChatUsecase.execute(store)
-    subscribeChatUseCase.execute(store)
   },
   computed: {
     chats(): Chat[] {
       return getChatUsecase.execute(this.$store)
     },
+  },
+  created() {
+    subscribeChatUseCase.execute(this.$store)
   },
   mounted() {
     this.scroolToBottom()

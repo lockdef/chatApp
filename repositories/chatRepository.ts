@@ -76,6 +76,7 @@ export default class ChatRepository {
    * @param store
    */
   unsubscribe(store: Store<any>) {
-    getState(store, 'unsubscribe')
+    commit(store, 'CLEAR', undefined)
+    getState(store, 'unsubscribe')()
   }
 }

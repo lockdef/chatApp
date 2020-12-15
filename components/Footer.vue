@@ -5,7 +5,7 @@
     <textarea
       v-model="message"
       placeholder="新しいメッセージを作成する"
-      class="bg-gray-input w-full h-16 px-6 py-4 lg:ml-12 ml-4 my-6 rounded-full resize-none text-lg text-black-text boder-solid border-green-main focus:bg-white-bg focus:outline-none focus:ring focus:ring-green-main"
+      class="scrollbar-none bg-gray-input w-full h-16 px-6 py-4 lg:ml-12 ml-4 my-6 rounded-full resize-none text-lg text-black-text boder-solid border-green-main focus:bg-white-bg focus:outline-none focus:ring focus:ring-green-main"
       cols="1"
     />
     <button
@@ -56,3 +56,11 @@ export default Vue.extend({
   },
 })
 </script>
+<style scoped>
+.scrollbar-none {
+  -ms-overflow-style: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+</style>
