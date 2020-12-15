@@ -33,6 +33,12 @@ type LocalState = {
 }
 
 export default Vue.extend({
+  props: {
+    uid: {
+      type: String,
+      required: true,
+    },
+  },
   data(): LocalState {
     return {
       message: '',
@@ -44,7 +50,7 @@ export default Vue.extend({
         return
       }
       const dto: CreateChatDto = {
-        userId: '',
+        userId: this.uid,
         sentence: this.message,
       }
       this.message = ''
