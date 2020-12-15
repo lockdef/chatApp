@@ -6,7 +6,7 @@
       class="pt-20 pb-28 overflow-y-scroll scrollbar-none mx-auto max-w-4xl h-screen bg-white-blur"
     >
       <div v-for="chat in chats" :key="chat.id" class="flex flex-col">
-        <Message :message="chat.sentence" :is-myself="false" />
+        <Message :message="chat.sentence" :is-myself="chat.userId === ''" />
       </div>
       <Footer />
     </div>
@@ -16,6 +16,7 @@
 <script lang="ts">
 import Vue from 'vue'
 import { Context } from '@nuxt/types'
+import { firebase } from '@/infrastructure/firebase'
 
 import { Chat } from '@/entities/chat'
 
@@ -26,10 +27,18 @@ import Footer from '@/components/Footer.vue'
 import GetChatUsecase from '@/usecase/chat/getChatUsecase'
 import FetchChatUsecase from '@/usecase/chat/fetchChatUsecase'
 import SubscribeChatUsecase from '@/usecase/chat/subscribeChatUsecase'
+import GetUserUsecase from '@/usecase/auth/getUserUsecase'
+import SignInUsecase from '@/usecase/auth/signInUsecase'
+import SubscribeUserUsecase from '@/usecase/auth/subscribeUserUsecase'
+import UpdateUserUsecase from '@/usecase/auth/updateUserUsecase'
 
 const getChatUsecase = new GetChatUsecase()
 const fetchChatUsecase = new FetchChatUsecase()
 const subscribeChatUseCase = new SubscribeChatUsecase()
+const getUserUsecase = new GetUserUsecase()
+const signInUsecase = new SignInUsecase()
+const subscribeUserUsecase = new SubscribeUserUsecase()
+const updateUserUsecase = new UpdateUserUsecase()
 
 export default Vue.extend({
   components: {
@@ -44,9 +53,14 @@ export default Vue.extend({
     chats(): Chat[] {
       return getChatUsecase.execute(this.$store)
     },
+    user(): firebase.User | null {
+      return getUserUsecase.execute(this.$store)
+    },
   },
   created() {
+    signInUsecase.execute()
     subscribeChatUseCase.execute(this.$store)
+    subscribeUserUsecase.execute(this.$store)
   },
   mounted() {
     this.scroolToBottom()
@@ -59,6 +73,9 @@ export default Vue.extend({
       const element = document.getElementById('messageBox')
       if (!element) return
       element.scrollTop = element.scrollHeight
+    },
+    updateProfile() {
+      updateUserUsecase.execute(this.$store, {})
     },
   },
 })
