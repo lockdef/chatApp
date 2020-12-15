@@ -38,12 +38,14 @@ export default Vue.extend({
   },
   async fetch({ store }) {
     await fetchChatUsecase.execute(store)
-    subscribeChatUseCase.execute(store)
   },
   computed: {
     chats(): Chat[] {
       return getChatUsecase.execute(this.$store)
     },
+  },
+  created() {
+    subscribeChatUseCase.execute(this.$store)
   },
   mounted() {
     this.scroolToBottom()
