@@ -2,7 +2,7 @@ import { Store } from 'vuex'
 import { firebase } from '@/infrastructure/firebase'
 import AuthRepository from '@/repositories/authRepository'
 
-export default class UpdatebeUserUsecase {
+export default class UpdateUserUsecase {
   authRepository: AuthRepository
 
   constructor() {
