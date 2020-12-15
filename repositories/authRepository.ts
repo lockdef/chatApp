@@ -2,7 +2,7 @@ import { Store } from 'vuex'
 import { firebase, auth } from '@/infrastructure/firebase'
 import { commit, getState } from '@/store/user'
 
-export default class authRepository {
+export default class AuthRepository {
   /**
    * サインイン/ログインを行う
    */
