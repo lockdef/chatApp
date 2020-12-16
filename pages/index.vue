@@ -37,7 +37,7 @@ import UpdateUserUsecase from '@/usecase/auth/updateUserUsecase'
 
 const getChatUsecase = new GetChatUsecase()
 const fetchChatUsecase = new FetchChatUsecase()
-const subscribeChatUseCase = new SubscribeChatUsecase()
+const subscribeChatUsecase = new SubscribeChatUsecase()
 const getUserUsecase = new GetUserUsecase()
 const signInUsecase = new SignInUsecase()
 const subscribeUserUsecase = new SubscribeUserUsecase()
@@ -75,13 +75,13 @@ export default Vue.extend({
     },
   },
   created() {
-    subscribeChatUseCase.execute(this.$store)
+    subscribeChatUsecase.execute(this.$store)
   },
   mounted() {
     this.scroolToBottom()
   },
   destroyed() {
-    subscribeChatUseCase.clear(this.$store)
+    subscribeChatUsecase.clear(this.$store)
   },
   methods: {
     scroolToBottom() {
