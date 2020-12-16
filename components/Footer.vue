@@ -25,20 +25,16 @@
 import Vue from 'vue'
 import { CreateChatDto } from '@/entities/chat'
 import CreateChatUseCase from '@/usecase/chat/createChatUseCase'
+import GetUserUsecase from '@/usecase/auth/getUserUsecase'
 
 const createChatUseCase = new CreateChatUseCase()
+const getUserUsecase = new GetUserUsecase()
 
 type LocalState = {
   message: string
 }
 
 export default Vue.extend({
-  props: {
-    uid: {
-      type: String,
-      required: true,
-    },
-  },
   data(): LocalState {
     return {
       message: '',
@@ -49,8 +45,10 @@ export default Vue.extend({
       if (this.message.length === 0) {
         return
       }
+      const user = getUserUsecase.execute(this.$store)
+      const userId = user ? user.uid : ''
       const dto: CreateChatDto = {
-        userId: this.uid,
+        userId,
         sentence: this.message,
       }
       this.message = ''
