@@ -6,7 +6,10 @@
       class="pt-20 pb-28 overflow-y-scroll scrollbar-none mx-auto max-w-4xl h-screen bg-white-blur"
     >
       <div v-for="chat in chats" :key="chat.id" class="flex flex-col">
-        <Message :message="chat.sentence" :is-myself="chat.userId === ''" />
+        <Message
+          :message="chat.sentence"
+          :is-myself="chat.userId === user.uid"
+        />
       </div>
       <Footer />
     </div>
@@ -41,6 +44,10 @@ const subscribeUserUsecase = new SubscribeUserUsecase()
 const updateUserUsecase = new UpdateUserUsecase()
 
 export default Vue.extend({
+  middleware({ store }) {
+    signInUsecase.execute()
+    subscribeUserUsecase.execute(store)
+  },
   components: {
     Header,
     Message,
@@ -53,14 +60,22 @@ export default Vue.extend({
     chats(): Chat[] {
       return getChatUsecase.execute(this.$store)
     },
+    chatsLength(): number {
+      return this.chats.length
+    },
     user(): firebase.User | null {
       return getUserUsecase.execute(this.$store)
     },
   },
+  watch: {
+    chatsLength: {
+      handler() {
+        this.scroolToBottom()
+      },
+    },
+  },
   created() {
-    signInUsecase.execute()
     subscribeChatUseCase.execute(this.$store)
-    subscribeUserUsecase.execute(this.$store)
   },
   mounted() {
     this.scroolToBottom()
