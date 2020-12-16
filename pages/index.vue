@@ -6,10 +6,7 @@
       class="pt-20 pb-28 overflow-y-scroll scrollbar-none mx-auto max-w-4xl h-screen bg-white-blur"
     >
       <div v-for="chat in chats" :key="chat.id" class="flex flex-col">
-        <Message
-          :message="chat.sentence"
-          :is-myself="chat.userId === user.uid"
-        />
+        <Message :message="chat.sentence" :chat-id="chat.userId" />
       </div>
       <Footer />
     </div>
@@ -33,7 +30,6 @@ import SubscribeChatUsecase from '@/usecase/chat/subscribeChatUsecase'
 import GetUserUsecase from '@/usecase/auth/getUserUsecase'
 import SignInUsecase from '@/usecase/auth/signInUsecase'
 import SubscribeUserUsecase from '@/usecase/auth/subscribeUserUsecase'
-import UpdateUserUsecase from '@/usecase/auth/updateUserUsecase'
 
 const getChatUsecase = new GetChatUsecase()
 const fetchChatUsecase = new FetchChatUsecase()
@@ -41,7 +37,6 @@ const subscribeChatUsecase = new SubscribeChatUsecase()
 const getUserUsecase = new GetUserUsecase()
 const signInUsecase = new SignInUsecase()
 const subscribeUserUsecase = new SubscribeUserUsecase()
-const updateUserUsecase = new UpdateUserUsecase()
 
 export default Vue.extend({
   middleware({ store }) {
@@ -82,15 +77,13 @@ export default Vue.extend({
   },
   destroyed() {
     subscribeChatUsecase.clear(this.$store)
+    // subscribeUserUsecase.clear(this.$store)
   },
   methods: {
     scroolToBottom() {
       const element = document.getElementById('messageBox')
       if (!element) return
       element.scrollTop = element.scrollHeight
-    },
-    updateProfile() {
-      updateUserUsecase.execute(this.$store, {})
     },
   },
 })

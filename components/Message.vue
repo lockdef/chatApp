@@ -12,11 +12,18 @@
         :class="isMyself ? 'text-white-bg' : 'text-black-text'"
         v-text="message"
       />
+      <p class="text-black-text" v-text="`name: ${user.displayName}`" />
     </div>
   </div>
 </template>
 <script lang="ts">
 import Vue from 'vue'
+import { firebase } from '@/infrastructure/firebase'
+
+import GetUserUsecase from '@/usecase/auth/getUserUsecase'
+
+const getUserUsecase = new GetUserUsecase()
+
 export default Vue.extend({
   props: {
     /**
@@ -27,11 +34,20 @@ export default Vue.extend({
       type: String,
     },
     /**
-     * ユーザー自身のメッセージかどうか
+     * チャットID
      */
-    isMyself: {
+    chatId: {
       required: true,
-      type: Boolean,
+      type: String,
+    },
+  },
+  computed: {
+    user(): firebase.User | null {
+      return getUserUsecase.execute(this.$store)
+    },
+    isMyself(): boolean {
+      const uid = this.user ? this.user.uid : 'null'
+      return this.chatId === uid
     },
   },
 })
