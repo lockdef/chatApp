@@ -34,5 +34,5 @@ export const commit = <T extends keyof typeof MutationName>(
 }
 
 export const getState = <T extends keyof State>(state: Store<any>, name: T) => {
-  return state.state.chat[name] as State[T]
+  return state.state.user[name] as State[T]
 }
