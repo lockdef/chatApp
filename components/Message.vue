@@ -12,7 +12,6 @@
         :class="isMyself ? 'text-white-bg' : 'text-black-text'"
         v-text="message"
       />
-      <p class="text-black-text" v-text="`name: ${user.displayName}`" />
     </div>
   </div>
 </template>
