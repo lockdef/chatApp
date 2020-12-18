@@ -1,5 +1,5 @@
 import { Store } from 'vuex'
-import { firebase, auth } from '@/infrastructure/firebase'
+import { firebase, auth, googleProvider } from '@/infrastructure/firebase'
 import { commit, getState } from '@/store/user'
 
 export default class AuthRepository {
@@ -7,10 +7,7 @@ export default class AuthRepository {
    * サインイン/ログインを行う
    */
   signIn() {
-    auth
-      .signInAnonymously()
-      .then(() => {})
-      .catch(() => {})
+    auth.signInWithPopup(googleProvider).then()
   }
 
   /**
@@ -20,6 +17,7 @@ export default class AuthRepository {
   subscribe(store: Store<any>) {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
+        console.log(user)
         const cloneUser = JSON.parse(JSON.stringify(user))
         commit(store, 'SET', cloneUser)
       }
@@ -35,7 +33,10 @@ export default class AuthRepository {
   update(store: Store<any>, profile: Partial<firebase.User>) {
     const user = getState(store, 'user')
     if (!user) return
-    user.updateProfile(profile)
+    user
+      .updateProfile(profile)
+      .then(() => {})
+      .catch(() => {})
   }
 
   /**
