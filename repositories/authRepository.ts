@@ -17,7 +17,6 @@ export default class AuthRepository {
   subscribe(store: Store<any>) {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        console.log(user)
         const cloneUser = JSON.parse(JSON.stringify(user))
         commit(store, 'SET', cloneUser)
       }
