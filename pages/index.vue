@@ -1,10 +1,10 @@
 <template>
   <div>
     <loading
-      :active="true"
+      :active="loading"
       loader="dots"
       opacity="1"
-      color=""
+      color="#5EC3B1"
       :is-full-page="true"
     ></loading>
     <div class="bg-gradient-to-br from-green-bg to-purple-bg w-screen h-screen">
@@ -50,10 +50,10 @@ const subscribeUserUsecase = new SubscribeUserUsecase()
 
 export default Vue.extend({
   components: {
+    Loading,
     Header,
     Message,
     Footer,
-    Loading,
   },
   async fetch({ store }: Context) {
     await fetchChatUsecase.execute(store)
@@ -71,17 +71,22 @@ export default Vue.extend({
     subscribeChatUsecase.execute(this.$store)
   },
   mounted() {
-    this.scroolToBottom()
+    const vm = this as any
+    vm.scroolToBottom()
   },
   destroyed() {
     subscribeChatUsecase.clear(this.$store)
-    // subscribeUserUsecase.clear(this.$store)
+    subscribeUserUsecase.clear(this.$store)
   },
   methods: {
     scroolToBottom() {
       const element = document.getElementById('messageBox')
       if (!element) return
       element.scrollTop = element.scrollHeight
+    },
+    loading() {
+      setTimeout(() => {}, 500)
+      return false
     },
   },
 })
