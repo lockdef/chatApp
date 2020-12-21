@@ -8,7 +8,7 @@ service cloud.firestore {
       return request.auth.uid != null;
     }
     match /chat {
-      allow read: true;
+      allow read: if true;
       allow create: if isSignedIn() 
                         && requestData().size() == 3
                         && 'createdAt' in requestData() && requestData().createdAt is timestamp
