@@ -50,6 +50,7 @@ const subscribeUserUsecase = new SubscribeUserUsecase()
 
 export default Vue.extend({
   components: {
+    // @ts-ignore
     Loading,
     Header,
     Message,
@@ -57,6 +58,11 @@ export default Vue.extend({
   },
   async fetch({ store }: Context) {
     await fetchChatUsecase.execute(store)
+  },
+  data() {
+    return {
+      isLoading: true,
+    }
   },
   computed: {
     chats(): Chat[] {
