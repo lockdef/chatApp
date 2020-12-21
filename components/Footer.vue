@@ -47,7 +47,8 @@ export default Vue.extend({
         return
       }
       const user = getUserUsecase.execute(this.$store)
-      const userId = user ? user.uid : ''
+      if (!user) return
+      const userId = user.uid
       const dto: CreateChatDto = {
         userId,
         sentence: this.message,
