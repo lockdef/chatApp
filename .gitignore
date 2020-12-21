@@ -91,3 +91,6 @@ sw.*
 
 # certification files
 infrastructure/firebaseCertificate.json
+
+# firebase
+.firebase
