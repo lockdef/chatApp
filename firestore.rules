@@ -7,7 +7,7 @@ service cloud.firestore {
     function isSignedIn() {
       return request.auth.uid != null;
     }
-    match /chat {
+    match /chat/{chatId} {
       allow read: if true;
       allow create: if isSignedIn() 
                         && requestData().size() == 3
