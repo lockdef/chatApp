@@ -1,9 +1,19 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
-    match /{document=**} {
-      allow read, write: if
-          request.time < timestamp.date(2021, 1, 11);
+    function requestData() {
+      return request.resource.data;
+    }
+    function isSignedIn() {
+      return request.auth.uid != null;
+    }
+    match /chat {
+      allow read: true;
+      allow create: if isSignedIn() 
+                        && requestData().size() == 3
+                        && 'createdAt' in requestData() && requestData().createdAt is timestamp
+                        && 'sentence' in requestData() && requestData().sentence is string
+                        && 'userId' in requestData() && requestData().userId is string;
     }
   }
 }
