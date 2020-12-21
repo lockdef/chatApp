@@ -1,7 +1,7 @@
 <template>
   <div>
     <loading
-      :active="loading"
+      :active="isLoading"
       loader="dots"
       opacity="1"
       color="#5EC3B1"
@@ -72,6 +72,15 @@ export default Vue.extend({
       return getUserUsecase.execute(this.$store)
     },
   },
+  watch: {
+    chats: {
+      handler() {
+        const vm = this as any
+        window.setTimeout(vm.scroolToBottom, 100)
+      },
+      deep: true,
+    },
+  },
   created() {
     subscribeUserUsecase.execute(this.$store)
     subscribeChatUsecase.execute(this.$store)
@@ -79,6 +88,9 @@ export default Vue.extend({
   mounted() {
     const vm = this as any
     vm.scroolToBottom()
+    window.setTimeout(() => {
+      vm.isLoading = false
+    }, 1000)
   },
   destroyed() {
     subscribeChatUsecase.clear(this.$store)
@@ -89,10 +101,6 @@ export default Vue.extend({
       const element = document.getElementById('messageBox')
       if (!element) return
       element.scrollTop = element.scrollHeight
-    },
-    loading() {
-      setTimeout(() => {}, 500)
-      return false
     },
   },
 })
