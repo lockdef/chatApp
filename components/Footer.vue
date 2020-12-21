@@ -4,9 +4,12 @@
   >
     <textarea
       v-model="message"
-      placeholder="新しいメッセージを作成する"
+      :placeholder="
+        user ? '新しいメッセージを作成する' : 'サインインしてください'
+      "
       class="scrollbar-none bg-gray-input w-full h-16 px-6 py-4 lg:ml-12 ml-4 my-6 rounded-full resize-none text-lg text-black-text boder-solid border-green-main focus:bg-white-bg focus:outline-none focus:ring focus:ring-green-main"
       cols="1"
+      :disabled="!user"
       @keydown.enter.ctrl="createChat"
     />
     <button
@@ -41,14 +44,18 @@ export default Vue.extend({
       message: '',
     }
   },
+  computed: {
+    user() {
+      return getUserUsecase.execute(this.$store)
+    },
+  },
   methods: {
     async createChat() {
       if (this.message.length === 0) {
         return
       }
-      const user = getUserUsecase.execute(this.$store)
-      if (!user) return
-      const userId = user.uid
+      if (!this.user) return
+      const userId = this.user.uid
       const dto: CreateChatDto = {
         userId,
         sentence: this.message,
