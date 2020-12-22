@@ -7,7 +7,7 @@
       color="#5EC3B1"
       :is-full-page="true"
     ></loading>
-    <div class="bg-gradient-to-br from-green-bg to-purple-bg w-screen h-screen">
+    <div class="bg-gradient-to-br from-green-bg to-purple-bg w-screen h-full">
       <Header />
       <div
         id="messageBox"

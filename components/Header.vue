@@ -1,6 +1,6 @@
 <template>
   <div
-    class="absolute top-0 w-screen bg-white-bg flex justify-between items-center flex-d h-20"
+    class="fixed top-0 w-screen bg-white-bg flex justify-between items-center flex-d h-20"
   >
     <h1 class="text-green-text px-4 m-3 mr-0 text-3xl font-bold">ChatApp</h1>
     <div>

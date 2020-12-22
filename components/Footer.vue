@@ -1,7 +1,5 @@
 <template>
-  <div
-    class="flex justify-between absolute bottom-0 max-w-4xl w-full bg-white-bg"
-  >
+  <div class="flex justify-between fixed bottom-0 max-w-4xl w-full bg-white-bg">
     <textarea
       v-model="message"
       :placeholder="
