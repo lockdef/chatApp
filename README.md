@@ -6,7 +6,9 @@
 
 アプリの使用には google ログインが必要
 
-アプリ公開 URL： [chatapp-23f71.web.app](https://chatapp-23f71.web.app/)
+アプリ公開 URL(Main)： [chat.defs.dev](https://chat.defs.dev/)
+
+アプリ公開 URL(Sub)： [chatapp-23f71.web.app](https://chatapp-23f71.web.app/)
 
 ## アプリ画像
 
